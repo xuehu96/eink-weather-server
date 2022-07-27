@@ -45,4 +45,4 @@ https://gitee.com/openLuat/LuatOS/blob/master/script/turnkey/eink-calendar/main.
 
 IP、token改为自己的
 
-![image-20220727115015432](C:\Go\2.code\eink-cyweather\README.assets\image-20220727115015432.png)
+![image-20220727115015432](.\README.assets\image-20220727115015432.png)
