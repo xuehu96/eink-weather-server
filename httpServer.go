@@ -5,7 +5,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 )
+
+var Weather WeatherDataType
 
 func EinkWeatherFunc(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
@@ -29,14 +32,29 @@ func EinkWeatherFunc(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if cdTxt == "" {
-		cdTxt = "过年"
+		cdTxt = "跑路"
 	}
 	if cdDate == "" {
-		cdDate = "20230122"
+		cdDate = "20221231"
 	}
 
 	// 3. 获取天气信息
-	weather := getWeatherInfo(latlng, token)
+	var weather WeatherDataType
+	// 以下为夜间节省API次数, 如果夜间需要实时更新，改为true
+	nighton := false
+	h, m, _ := time.Now().Clock()
+	if h >= 7 || nighton {
+		weather = getWeatherInfo(latlng, token)
+		Weather = weather
+	} else {
+		if m <= 5 {
+			// 夜间前5分钟刷新
+			weather = getWeatherInfo(latlng, token)
+			Weather = weather
+		} else {
+			weather = Weather
+		}
+	}
 	log.Println(weather)
 
 	// 4. 拼装图片

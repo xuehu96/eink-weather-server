@@ -74,7 +74,6 @@ func getWeatherInfo(latlng string, token string) (w WeatherDataType) {
 		log.Println(err)
 	}
 
-	// 彩云API又臭又长
 	temperature, ok1 := srcmsg["result"].(map[string]interface{})["realtime"].(map[string]interface{})["temperature"]
 	skycon, ok2 := srcmsg["result"].(map[string]interface{})["realtime"].(map[string]interface{})["skycon"]
 	forecast_keypoint, ok3 := srcmsg["result"].(map[string]interface{})["forecast_keypoint"]
