@@ -77,7 +77,7 @@ func DrawWeatherDescribe(dc *gg.Context, str string) {
 	}
 	if realLength(str) > 20 {
 		strRune := []rune(str)
-		str = string(strRune[:10]) + "\n" + string(strRune[11:])
+		str = string(strRune[:10]) + "\n" + string(strRune[10:])
 	}
 	dc.DrawStringWrapped(str, 200/2, 140, 0.5, 0.5, 200-10, 1.3, gg.AlignCenter)
 }
@@ -93,19 +93,21 @@ func DrawTemp(dc *gg.Context, tmp string, f string) {
 	if err := dc.LoadFontFace("./static/SourceHanSansCN-Regular.ttf", 18); err != nil {
 		panic(err)
 	}
-	dc.DrawString("℃", 168, 80)
+	dc.DrawString(tmp[len(tmp)-2:]+" ℃", 148, 80)
 
-	if err := dc.LoadFontFace("./static/sarasa-mono-sc-nerd-regular.ttf", 36); err != nil {
+	if err := dc.LoadFontFace("./static/sarasa-mono-sc-nerd-regular.ttf", 48); err != nil {
 		panic(err)
 	}
-	dc.DrawString(tmp, 90, 77)
+	temp := tmp[:len(tmp)-2]
+	sw_, _ := dc.MeasureString(temp)
+	dc.DrawString(temp, 145-sw_, 80)
 
 	if err := dc.LoadFontFace("./static/SourceHanSansCN-Regular.ttf", 12); err != nil {
 		panic(err)
 	}
-	sw_, _ := dc.MeasureString(f)
+	sw_, _ = dc.MeasureString(f)
 
-	dc.DrawString(f, 196-sw_, 52)
+	dc.DrawString(f, 185-sw_, 53)
 }
 
 func DrawBottom(dc *gg.Context) {
