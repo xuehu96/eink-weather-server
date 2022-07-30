@@ -125,14 +125,14 @@ func DrawBottom(dc *gg.Context) {
 	h, m, _ := time.Now().Clock()
 	past := h*60 + m
 	remain := 1440 - past
-	precent := float32(remain*100) / 1440
+	percent := float32(remain*100) / 1440
 	var str string
-	if precent >= 100 {
+	if percent >= 100 {
 		str = "100%"
-	} else if precent < 10 {
-		str = fmt.Sprintf("%.2f%%", precent)
+	} else if percent < 10 {
+		str = fmt.Sprintf("%.2f%%", percent)
 	} else {
-		str = fmt.Sprintf("%.1f%%", precent)
+		str = fmt.Sprintf("%.1f%%", percent)
 	}
 
 	dc.DrawString(str, 30, 193)
