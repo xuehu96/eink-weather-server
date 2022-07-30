@@ -38,7 +38,7 @@ func DrawDate(dc *gg.Context) {
 		"Saturday":  "周六",
 		"Sunday":    "周日",
 	}
-	str := timeNow.Format("1月02日 ") + WeekDayMap[timeNow.Weekday().String()]
+	str := timeNow.Format("1月2日 ") + WeekDayMap[timeNow.Weekday().String()]
 	sWidth, sHeight := dc.MeasureString(str)
 	dc.DrawString(str, (200-sWidth)/2, sHeight+5)
 
@@ -125,7 +125,16 @@ func DrawBottom(dc *gg.Context) {
 	h, m, _ := time.Now().Clock()
 	past := h*60 + m
 	remain := 1440 - past
-	str := fmt.Sprintf("%.1f%%", float32(remain*100)/1440)
+	precent := float32(remain*100) / 1440
+	var str string
+	if precent >= 100 {
+		str = "100%"
+	} else if precent < 10 {
+		str = fmt.Sprintf("%.2f%%", precent)
+	} else {
+		str = fmt.Sprintf("%.1f%%", precent)
+	}
+
 	dc.DrawString(str, 30, 193)
 }
 
